@@ -18,7 +18,7 @@ Have a new DNS to add? Make a PR ✨
 Now you can run the dns-setter script from anywhere on your system:
 
 ```shell
-dns-setter <alias> <driver_name>
+dns-setter <alias> <connection_name>
 ```
 ___
 ### Current list of aliases for DNS servers:
