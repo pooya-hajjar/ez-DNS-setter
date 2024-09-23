@@ -8,7 +8,7 @@ Have a new DNS to add? Make a PR ✨
 
 # Install
 ```shell
-  git clone https://github.com/pooya-hajjar/ez-DNS-setter/edit/master/dns-setter ez-dns-setter
+  git clone https://github.com/pooya-hajjar/ez-DNS-setter.git ez-dns-setter
   sudo cp ./ez-dns-setter/dns-setter /usr/local/bin/
   sudo rm -rf ./ez-dns-setter
   sudo chmod +x /usr/local/bin/dns-setter
