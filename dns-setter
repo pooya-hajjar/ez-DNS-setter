@@ -24,20 +24,20 @@ dns_map["403"]="10.202.10.202,10.202.10.102"
 dns_map["radar"]="10.202.10.10,10.202.10.11"
 dns_map["electro"]="78.157.42.101,78.157.42.100"
 
-# Find the wired connection
-wired_connection=$(nmcli -t -f NAME,TYPE c | grep "^$driver_name" | awk -F: '{print $1}')
+# Find the connection
+connection=$(nmcli -t -f NAME,TYPE c | grep "^$driver_name" | awk -F: '{print $1}')
 
-if [ -z "$wired_connection" ]; then
-    echo "No wired connection found for driver $driver_name."
+if [ -z "$connection" ]; then
+    echo "No connection found for driver $driver_name."
     echo "Available connections:"
     nmcli -t -f NAME,TYPE c
     exit 1
 fi
 
 if [ "$alias" = "none" ]; then
-    echo "Setting DNS to automatic (none) for wired connection $wired_connection"
-    nmcli con mod "$wired_connection" ipv4.ignore-auto-dns no   # Enable automatic DNS
-    nmcli con mod "$wired_connection" ipv4.dns ""               # Clear any existing DNS
+    echo "Setting DNS to automatic (none) for connection $connection"
+    nmcli con mod "$connection" ipv4.ignore-auto-dns no   # Enable automatic DNS
+    nmcli con mod "$connection" ipv4.dns ""               # Clear any existing DNS
 else
     # Check if the alias exists in the map
     if [ -z "${dns_map[$alias]}" ]; then
@@ -48,12 +48,12 @@ else
     # Get the DNS servers for the alias
     dns_servers=${dns_map[$alias]}
 
-    echo "Setting DNS servers to $dns_servers for wired connection $wired_connection"
-    nmcli con mod "$wired_connection" ipv4.ignore-auto-dns yes  # Disable automatic DNS
-    nmcli con mod "$wired_connection" ipv4.dns "$dns_servers"   # Set the provided DNS servers
+    echo "Setting DNS servers to $dns_servers for connection $connection"
+    nmcli con mod "$connection" ipv4.ignore-auto-dns yes  # Disable automatic DNS
+    nmcli con mod "$connection" ipv4.dns "$dns_servers"   # Set the provided DNS servers
 fi
 
 # Apply the changes
-nmcli con up "$wired_connection"
+nmcli con up "$connection"
 
-echo "DNS servers updated successfully for wired connection."
+echo "DNS servers updated successfully for connection."
